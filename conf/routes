@@ -4,4 +4,4 @@
 # ~~~~
 
 # Receives a POST Request
-GET     /create/*apiPath         controllers.HomeController.createMock(apiPath)
+POST     /create/*apiPath         controllers.MockApiController.createMock(apiPath)
