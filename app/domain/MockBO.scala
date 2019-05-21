@@ -1,0 +1,7 @@
+package domain
+
+object MockBO {
+
+
+
+}
