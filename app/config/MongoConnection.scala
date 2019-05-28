@@ -1,9 +1,14 @@
 package config
 
 import akka.parboiled2.RuleTrace.Action
+import models.Mock
+import org.bson.BsonDouble
 import org.mongodb.scala.bson.BsonDocument
 import org.mongodb.scala.{Completed, Document, MongoClient, MongoCollection, MongoDatabase, Observable, Observer}
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsValue, Json}
+
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
 
 object MongoConnection {
 
@@ -27,8 +32,11 @@ object MongoConnection {
 
   def getApis() ={
     val collection = mongoConnection.getCollection("mock")
-    collection.find()
-      .collect()
-      .subscribe((results: Seq[Document]) => println( results))
+    val mocks = collection.find
+
+    var result : Option[Document] = Option(null)
+
+
+    Await.result( collection.find().toFuture, Duration.Inf).asInstanceOf[List[Document]]
   }
 }

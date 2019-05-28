@@ -1,6 +1,8 @@
 package domain
 
 import config.MongoConnection
+import models.Mock
+import org.mongodb.scala.{Document, Observer}
 import play.api.libs.json.{JsValue, Json}
 import utils.MockPathTrait
 
@@ -15,8 +17,8 @@ object MockBO extends MockPathTrait {
     root.put("path",apiPath)
     root.put("requestBody", bodyValue.toString())
     MongoConnection.saveNewEntry(Json.parse(root.toString))
-    MongoConnection.getApis()
-
+    val apis = MongoConnection.getApis()
+    val h = apis.map(r => Json.parse(r.toJson()).as[Mock])
+    Json.toJson(h)
   }
-
 }

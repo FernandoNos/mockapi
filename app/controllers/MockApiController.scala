@@ -11,10 +11,9 @@ class MockApiController @Inject()(cc: ControllerComponents) extends AbstractCont
 
   def createMock(apiPath:String) = Action { implicit request: Request[AnyContent] =>
 
-    //MongoConnection.createConnection()
     val body: AnyContent          = request.body
-    MockBO.createMockApi(apiPath, body.asJson)
+    var result = MockBO.createMockApi(apiPath, body.asJson)
 
-    Ok("testing")
+    Ok(result.toString)
   }
 }
